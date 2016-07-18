@@ -28,25 +28,32 @@ export default class PictureBox extends React.Component {
   }
 
   _previousPicture() {
-    alert('prev');
+    console.log('prev');
+    this.setState({current_picture_id : this.state.current_picture_id-1});
   }
 
   _nextPicture() {
-    alert('next');
+    console.log('next');
+    this.setState({current_picture_id : this.state.current_picture_id+1});
+  }
+
+  _getCurrentPicture() {
+    return this.state.pictures[this.state.current_picture_id];
   }
 
   render() {
 
     //console.log(this.state.pictures)
+    var picture = this._getCurrentPicture();
 
     return(
       <div className="picture">
         <div className = "previous" onClick={this._previousPicture.bind(this)}>prev</div>
         <div className = "next" onClick={this._nextPicture.bind(this)}>next</div>
 
-        <p>img - src = </p>
+        <p>img - src = {picture.src}</p>
 
-        <CommentBox title="ok" />
+        <CommentBox title="ok" comments={picture.comments} />
 
       </div>
     );
