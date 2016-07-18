@@ -5,14 +5,16 @@ import jQuery from 'jquery';
 import {Router, Route, hashHistory, Redirect} from 'react-router';
 
 import Layout from './layout/Layout';
+import PictureBox from './components/PictureBox';
+//import Picture from './components/Picture';
+import About from './components/About';
+
 
 const app = (
   <Router history={hashHistory}>
-    <Redirect from='/' to='/picture/1'>
+    <Redirect from='/' to='/about' />
     <Route path='/' component={Layout}>
-      <Route path='picture' component={Pictures}>
-        <Route path='/:id' component={Picture}></Route>
-      </Route>
+      <Route path='pictures' component={PictureBox}></Route>
       <Route path='about' component={About}></Route>
     </Route>
   </Router>
@@ -21,7 +23,7 @@ const app = (
 
 jQuery(function(){
   ReactDOM.render(
-    <Layout />,
-    document.getElementById('comment-box')
+    app,
+    document.getElementById('app-box')
   );
 });
