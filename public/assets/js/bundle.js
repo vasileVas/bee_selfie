@@ -35735,7 +35735,7 @@ var app = _react2.default.createElement(
   _reactDom2.default.render(app, document.getElementById('app-box'));
 });
 
-},{"./components/About":236,"./components/PictureBox":237,"./layout/Layout":238,"jquery":2,"react":234,"react-dom":3,"react-router":33}],236:[function(require,module,exports){
+},{"./components/About":236,"./components/PictureBox":238,"./layout/Layout":239,"jquery":2,"react":234,"react-dom":3,"react-router":33}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35802,32 +35802,121 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Pictures = function (_React$Component) {
-  _inherits(Pictures, _React$Component);
+var CommentBox = function (_React$Component) {
+  _inherits(CommentBox, _React$Component);
 
-  function Pictures() {
-    _classCallCheck(this, Pictures);
+  function CommentBox() {
+    _classCallCheck(this, CommentBox);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Pictures).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).apply(this, arguments));
   }
 
-  _createClass(Pictures, [{
+  _createClass(CommentBox, [{
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'h4',
+        'h2',
         null,
-        'from pictures comp'
+        'Comments: ',
+        this.props.title
       );
     }
   }]);
 
-  return Pictures;
+  return CommentBox;
 }(_react2.default.Component);
 
-exports.default = Pictures;
+exports.default = CommentBox;
 
 },{"react":234}],238:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _CommentBox = require('./CommentBox');
+
+var _CommentBox2 = _interopRequireDefault(_CommentBox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import jQuery from 'jquery';
+
+
+var PictureBox = function (_React$Component) {
+  _inherits(PictureBox, _React$Component);
+
+  function PictureBox() {
+    _classCallCheck(this, PictureBox);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PictureBox).call(this));
+
+    var pictures = [{ id: 1, src: 'pic1.png', comments: [{ id: 1, author: 'radu 1', body: '...some content 1 1....' }, { id: 2, author: 'vasile 1', body: '...some content 1 2....' }] }, { id: 2, src: 'pic2.png', comments: [{ id: 1, author: 'radu 2', body: '...some content 2 1....' }, { id: 2, author: 'vasile 2', body: '...some content 2 2....' }] }, { id: 3, src: 'pic3.png', comments: [{ id: 1, author: 'radu 3', body: '...some content 3 1....' }, { id: 2, author: 'vasile 3', body: '...some content 3 2....' }] }];
+
+    _this.state = {
+      current_picture_id: 0,
+      pictures: pictures
+    };
+    return _this;
+  }
+
+  _createClass(PictureBox, [{
+    key: '_previousPicture',
+    value: function _previousPicture() {
+      alert('prev');
+    }
+  }, {
+    key: '_nextPicture',
+    value: function _nextPicture() {
+      alert('next');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      //console.log(this.state.pictures)
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'picture' },
+        _react2.default.createElement(
+          'div',
+          { className: 'previous', onClick: this._previousPicture.bind(this) },
+          'prev'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'next', onClick: this._nextPicture.bind(this) },
+          'next'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'img - src = '
+        ),
+        _react2.default.createElement(_CommentBox2.default, { title: 'ok' })
+      );
+    }
+  }]);
+
+  return PictureBox;
+}(_react2.default.Component);
+
+exports.default = PictureBox;
+
+},{"./CommentBox":237,"react":234}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
