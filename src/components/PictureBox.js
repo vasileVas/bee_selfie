@@ -1,5 +1,5 @@
 import React from 'react';
-import jQuery from 'jquery';
+//import jQuery from 'jquery';
 import CommentBox from './CommentBox';
 
 export default class PictureBox extends React.Component {
@@ -28,29 +28,33 @@ export default class PictureBox extends React.Component {
     this.setState({current_picture_id : this.state.current_picture_id+1});
   }
 
+  _calljNorthPole(json, responseHandler) {
+
+    jNorthPole.getStorage(json, responseHandler.bind(this));
+    jNorthPole.getNewRealtimeSocket(responseHandler);
+
+  }
+
 
   _fetchPicturess() {
 
     console.log(jNorthPole);
 
     var json= {
-     "api_key":"guest",
-     "secret":"guest",
-     "id": "578de370c9cfa02887000001"
+     "api_key":"tkwdemo",
+     "secret":"tkwdemo",
+     "id": "578e12a9c9cfa03ef7000001"
     };
 
-    var responseHandler = function (data) {
-      console.log('best');
-      console.log(data);
-    };
+    this._calljNorthPole(json, function (data) {
+      if (data != null && data[0]) {
+        const pictures = data[0].storage;
+        this.setState({ pictures });
+      }
+    );
 
-    jNorthPole.getStorage(json, responseHandler);
 
-    var socket = jNorthPole.getNewRealtimeSocket(responseHandler);
-    jNorthPole.subscribe(socket, 'foo');
-    jNorthPole.publish(socket, 'foo', { message: 'hello' });
-
-    jQuery.ajax({
+    /*jQuery.ajax({
       method: "GET",
       url: "api/pictures.json",
       success: (pictures) => {
@@ -58,7 +62,7 @@ export default class PictureBox extends React.Component {
         console.log(pictures);
         this.setState({ pictures })
       }
-    });
+    });*/
   }
 
   render() {
