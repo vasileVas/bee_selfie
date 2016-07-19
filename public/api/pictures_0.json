@@ -1,0 +1,4 @@
+{id:1, src:'pic1.png', comments:[
+  {id:1, author:'radu 1', body:'...some content 1 1....'},
+  {id:2, author:'vasile 1', body:'...some content 1 2....'}
+]}
