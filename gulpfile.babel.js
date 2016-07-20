@@ -9,6 +9,9 @@ import watchify from 'watchify';
 import babelify from 'babelify';
 import uglify from 'gulp-uglify';
 import ifElse from 'gulp-if-else';
+import sass from 'gulp-sass';
+import autoprefixer from 'gulp-autoprefixer';
+
 
 watchify.args.debug = true;
 
@@ -42,12 +45,23 @@ function bundle() {
 
 gulp.task('default', ['transpile']);
 
-gulp.task('transpile', ['lint'], () => bundle());
+gulp.task('transpile', ['lint', 'styles'], () => bundle());
 
 gulp.task('lint', () => {
     return gulp.src(['src/**/*.js', 'gulpfile.babel.js'])
       .pipe(eslint())
       .pipe(eslint.format())
+});
+
+gulp.task('styles', () => {
+  gulp.src('src/scss/style.scss')
+    // scss output compressed if production or expanded if development
+    .pipe(sass({ outputStyle: 'expanded' }))
+    .pipe(autoprefixer({
+      browsers: ['last 3 versions'],
+      cascade: false,
+    }))
+    .pipe(gulp.dest('public/assets/css'));
 });
 
 gulp.task('serve', ['transpile'], () => sync.init({ server: 'public' }))

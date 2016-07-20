@@ -29,6 +29,7 @@ export default class PictureBox extends React.Component {
         <div className = "previous" onClick={this._previousPicture.bind(this)}>prev</div>
         <div className = "next" onClick={this._nextPicture.bind(this)}>next</div>
 
+        <img src={picture.src} />
         <p>img - src = {picture.src}</p>
 
         <CommentBox title="ok" comments={picture.comments} />
@@ -42,7 +43,7 @@ export default class PictureBox extends React.Component {
     console.log('prev');
     //this._addPicture();
     //this._addComment(4, 'radu 4', 'bbbb 2');
-    this._deleteComment("4_1");
+    //this._deleteComment("4_1");
 
     //this.setState({current_picture_id : this.state.current_picture_id-1});
   }

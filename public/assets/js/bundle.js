@@ -36164,6 +36164,7 @@ var PictureBox = function (_React$Component) {
           { className: 'next', onClick: this._nextPicture.bind(this) },
           'next'
         ),
+        _react2.default.createElement('img', { src: picture.src }),
         _react2.default.createElement(
           'p',
           null,
@@ -36179,7 +36180,7 @@ var PictureBox = function (_React$Component) {
       console.log('prev');
       //this._addPicture();
       //this._addComment(4, 'radu 4', 'bbbb 2');
-      this._deleteComment("4_1");
+      //this._deleteComment("4_1");
 
       //this.setState({current_picture_id : this.state.current_picture_id-1});
     }
