@@ -25,15 +25,23 @@ export default class PictureBox extends React.Component {
     const picture = this.state.pictures[this.state.current_picture_id];
 
     return(
-      <div className="picture">
-        <div className = "previous" onClick={this._previousPicture.bind(this)}>prev</div>
-        <div className = "next" onClick={this._nextPicture.bind(this)}>next</div>
 
-        <img src={picture.src} />
-        <p>img - src = {picture.src}</p>
+      <div>
+        <div className="cell">
+          <article className="article article-picture">
+            <div className="article article-picture-description">
+              description ...
+            </div>
+            <div className="article article-picture-image">
+              <img src={picture.src} alt="description" />
+            </div>
+          </article>
 
-        <CommentBox title="ok" comments={picture.comments} />
+          <div className = "previous" onClick={this._previousPicture.bind(this)}>prev</div>
+          <div className = "next" onClick={this._nextPicture.bind(this)}>next</div>
 
+        </div>
+        <CommentBox picture_id={picture.id} comments={picture.comments} onDeleteComment={this._deleteComment.bind(this)}/>
       </div>
     );
 
@@ -64,6 +72,9 @@ export default class PictureBox extends React.Component {
   }
 
   _deleteComment(comment_id) {
+
+    console.log('111'+comment_id);
+
     const [picture_ind, comment_ind] = comment_id.split('_');
     const pictures = this.state.pictures;
     const picture = pictures[picture_ind-1];

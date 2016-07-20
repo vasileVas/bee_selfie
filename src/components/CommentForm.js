@@ -16,7 +16,7 @@ export default class CommentForm extends React.Component {
       <form className="comment-form" onSubmit={this._handleSubmit}>
         <label>New comment</label>
         <div className="comment-form-fields">
-          <input placeholder="Name:" ref={c => this._author = c} />
+          <input placeholder="Name:"  ref={c => this._author = c} />
           <textarea placeholder="Comment:" ref={c => this._body = c} onChange={this._getCharacterCount}></textarea>
         </div>
         <p>{this.state.characters} characters</p>

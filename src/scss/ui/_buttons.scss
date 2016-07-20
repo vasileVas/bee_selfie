@@ -11,22 +11,27 @@ button {
 .button, button, input[type="submit"], input[type="button"], input[type="reset"] {
     display: inline-block;
     position: relative;
-    padding: 8px 20px;
     text-align: center;
     text-decoration: none;
     font-weight: normal;
+
     border: 0 none;
+    border-radius: 10px;
+    color: #6ba2aa;
+    line-height: 3;
+    padding: 0 40px;
+    text-transform: uppercase;
+
     margin: 0 2px;
 	font-size: 14px;
 	@include fade;
     font-weight: $font-weight-body;
     font-family: $font-family-title;
-    text-transform: capitalize;
 }
 
 .button, button, button a, input[type="submit"], input[type="button"], input[type="reset"]{
 	background: $button-color;
-	color: #fff !important;
+	color: #6ba2aa !important;
 
 	&:hover{
 		background: $button-color-hover;
@@ -40,7 +45,7 @@ input[type="submit"]{
 
 input[type=submit][disabled=disabled], button[disabled=disabled], a.disabled, .button.disabled, button.disabled {
     background: $button-color-disabled;
-    color: $white !important;
+    color: #6ba2aa !important;
     opacity:0.6;
     cursor: default;
     pointer-events: none;
@@ -61,7 +66,7 @@ input.button {
 
 .button, button, input[type="submit"]{
 	background: $button-color;
-	color: #fff !important;
+	color: #6ba2aa !important;
 }
 
 .button.expanded{

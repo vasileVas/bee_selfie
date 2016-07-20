@@ -27,6 +27,8 @@ $line-height-mobile: 1.625;
 // COLORS
 $color1: #5bc0de;  //blue
 $color2: #9CBE26;  //green
+$color3: #9ecbd2;
+$color4: #6ba2aa;
 
 $success: #5cb85c; //green
 $info: #5bc0de; //blue
@@ -38,6 +40,7 @@ $black: #3a3a3a;
 $grey: #ccc;
 $grey-light: lighten( $grey, 16% );
 $grey-dark: darken( $grey, 20% );
+$blue_top: #3e7780;
 
 
 // COLORS: Links
@@ -45,6 +48,6 @@ $link_color: $color1;
 $link_hover: darken( $color1, 20% );
 
 // COLORS: Buttons
-$button-color: $color1;
+$button-color: #fce87c;
 $button-color-hover: darken( $button-color, 10% );
 $button-color-disabled: $button-color;

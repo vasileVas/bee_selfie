@@ -43,13 +43,14 @@ label{
 }
 
 input, textarea {
-    border: 1px solid #DDDDDD;
-    color: #7F7F7F;
-    font-family: sans-serif;
-    font-size: 14px;
-    line-height: 1;
-    margin: 2px 6px 12px 0;
-    padding: 8px;
+  border: 0 none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  outline: medium none;
+  padding: 10px;
+  resize: none;
+  width: 100%;
 
 }
 
@@ -86,4 +87,47 @@ button::-moz-focus-inner,
 input::-moz-focus-inner { /* Corrects inner padding and border displayed oddly in FF3/4 www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ */
     border: 0;
     padding: 0;
+}
+
+
+.comment-form {
+    background-color: #9ecbd2;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    padding: 20px;
+    position: relative;
+
+    &::before {
+        background: rgba(0, 0, 0, 0) url("images/illo-gears.svg") no-repeat scroll center center;
+        content: "";
+        height: 80px;
+        position: absolute;
+        right: 0;
+        top: -80px;
+        width: 154px;
+    }
+
+    label {
+        color: #6ba2aa;
+        display: block;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    button {
+        background-color: #fce87c;
+        border: 0 none;
+        border-radius: 10px;
+        color: #6ba2aa;
+        display: inline-block;
+        font-weight: 700;
+        line-height: 3;
+        padding: 0 40px;
+        text-transform: uppercase;
+        transition: all 0.2s ease-in-out 0s;
+    }
+
+    button:active {
+      background-color: #fbe259;
+    }
 }
