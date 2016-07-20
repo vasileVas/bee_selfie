@@ -35735,7 +35735,7 @@ var app = _react2.default.createElement(
   _reactDom2.default.render(app, document.getElementById('app-box'));
 });
 
-},{"./components/About":236,"./components/PictureBox":241,"./layout/Layout":242,"jquery":2,"react":234,"react-dom":3,"react-router":33}],236:[function(require,module,exports){
+},{"./components/About":236,"./components/PictureBox":241,"./layout/Layout":243,"jquery":2,"react":234,"react-dom":3,"react-router":33}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35843,7 +35843,7 @@ var Comment = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'comment' },
-        _react2.default.createElement('img', { src: 'assets/images/avatar-default.png' }),
+        _react2.default.createElement('div', { className: 'comment-avatar' }),
         _react2.default.createElement(
           'p',
           { className: 'comment-header' },
@@ -35875,7 +35875,7 @@ var Comment = function (_React$Component) {
   }, {
     key: '_handleDelete',
     value: function _handleDelete() {
-      this.props.onDelete(this.props.id);
+      this.props.onDelete(this.props.comment_id);
     }
   }]);
 
@@ -35943,11 +35943,6 @@ var CommentBox = function (_React$Component) {
     key: 'render',
     value: function render() {
       var comments = this._getComments();
-
-      console.log(this.state.comments);
-
-      //this.setState({comments : this.props.comments});
-
       return _react2.default.createElement(
         'div',
         { className: 'row_ comments-container' },
@@ -35955,14 +35950,8 @@ var CommentBox = function (_React$Component) {
           'div',
           { className: 'cell' },
           _react2.default.createElement(
-            'h2',
-            null,
-            'Join The Discussion'
-          ),
-          _react2.default.createElement(
             'div',
             { className: 'comment-box' },
-            _react2.default.createElement(_CommentForm2.default, { addComment: this._addComment }),
             _react2.default.createElement(
               'h3',
               { className: 'comment-count' },
@@ -35972,7 +35961,13 @@ var CommentBox = function (_React$Component) {
               'div',
               { className: 'comment-list' },
               comments
-            )
+            ),
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Join The Discussion'
+            ),
+            _react2.default.createElement(_CommentForm2.default, { addComment: this._addComment })
           )
         )
       );
@@ -35991,8 +35986,7 @@ var CommentBox = function (_React$Component) {
   }, {
     key: '_addComment',
     value: function _addComment(commentAuthor, commentBody) {
-
-      console.log('' + (commentAuthor, commentBody));
+      this.props.onAddComment(this.props.picture_id, commentAuthor, commentBody);
     }
   }, {
     key: '_getComments',
@@ -36008,9 +36002,8 @@ var CommentBox = function (_React$Component) {
   }, {
     key: '_deleteComment',
     value: function _deleteComment(comment_id) {
-      console.log('222' + comment_id);
-      var id = this.props.picture_id + '_' + comment_id;
-      this.props.onDeleteComment(id);
+      //const id = `${this.props.picture_id}_${comment_id}`;
+      this.props.onDeleteComment(comment_id);
     }
   }]);
 
@@ -36205,7 +36198,6 @@ var CommentForm = function (_React$Component) {
   }, {
     key: "_getCharacterCount",
     value: function _getCharacterCount() {
-
       this.setState({
         characters: this._body.value.length
       });
@@ -36214,12 +36206,13 @@ var CommentForm = function (_React$Component) {
     key: "_handleSubmit",
     value: function _handleSubmit(event) {
       event.preventDefault();
-
+      if (this._author.value === "" || this._body.value === "") {
+        alert('Please provide an author and a comment.');
+        return;
+      }
       this.props.addComment(this._author.value, this._body.value);
-
       this._author.value = '';
       this._body.value = '';
-
       this.setState({ characters: 0 });
     }
   }]);
@@ -36252,6 +36245,10 @@ var _CommentBox = require('./CommentBox');
 
 var _CommentBox2 = _interopRequireDefault(_CommentBox);
 
+var _PictureForm = require('./PictureForm');
+
+var _PictureForm2 = _interopRequireDefault(_PictureForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36268,12 +36265,19 @@ var PictureBox = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PictureBox).call(this));
 
+    _this.timer = '';
     _this.state = {
-      current_picture_id: 0,
+      current_picture_id: 4,
+      show_add_picture: false,
+      all_pictures: [],
       pictures: []
     };
-
-    //this._getCurrentPicture();
+    _this._deleteComment = _this._deleteComment.bind(_this);
+    _this._addComment = _this._addComment.bind(_this);
+    _this._addPicture = _this._addPicture.bind(_this);
+    _this._previousPicture = _this._previousPicture.bind(_this);
+    _this._toggleShowAddPicture = _this._toggleShowAddPicture.bind(_this);
+    _this._nextPicture = _this._nextPicture.bind(_this);
     return _this;
   }
 
@@ -36283,12 +36287,42 @@ var PictureBox = function (_React$Component) {
       this._fetchPicturess();
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.timer = setInterval(function () {
+        _this2._nextPicture();
+      }, 5000);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearInterval(this.timer);
+    }
+  }, {
     key: 'render',
     value: function render() {
-
-      if (!this.state.pictures.length) return null;
+      if (!this.state.all_pictures.length) return null;
 
       var picture = this.state.pictures[this.state.current_picture_id];
+      var form = void 0,
+          add_icon = void 0,
+          camera_title = void 0;
+      if (this.state.show_add_picture === true) {
+        form = _react2.default.createElement(_PictureForm2.default, {
+          addPicture: this._addPicture });
+        add_icon = 'fa fa-list fa-2x';
+        camera_title = 'return to comments';
+      } else {
+        form = _react2.default.createElement(_CommentBox2.default, {
+          picture_id: picture.id,
+          comments: picture.comments,
+          onDeleteComment: this._deleteComment,
+          onAddComment: this._addComment });
+        add_icon = 'fa fa-camera fa-2x';
+        camera_title = 'add photo';
+      }
 
       return _react2.default.createElement(
         'div',
@@ -36302,7 +36336,9 @@ var PictureBox = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'article article-picture-description' },
-              'description ...'
+              this.state.current_picture_id + 1,
+              '/5 : ',
+              picture.description
             ),
             _react2.default.createElement(
               'div',
@@ -36312,50 +36348,98 @@ var PictureBox = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'previous', onClick: this._previousPicture.bind(this) },
-            'prev'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'next', onClick: this._nextPicture.bind(this) },
-            'next'
+            { className: 'actions clearfix' },
+            _react2.default.createElement(
+              'a',
+              { className: 'previous', onClick: this._previousPicture, title: 'previous photo' },
+              _react2.default.createElement('i', { className: 'fa fa-arrow-left fa-2x', 'aria-hidden': 'true' })
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'camera', onClick: this._toggleShowAddPicture, title: camera_title },
+              _react2.default.createElement('i', { className: add_icon, 'aria-hidden': 'true' })
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'next', onClick: this._nextPicture, title: 'next photo' },
+              _react2.default.createElement('i', { className: 'fa fa-arrow-right fa-2x', 'aria-hidden': 'true' })
+            )
           )
         ),
-        _react2.default.createElement(_CommentBox2.default, { picture_id: picture.id, comments: picture.comments, onDeleteComment: this._deleteComment.bind(this) })
+        form
       );
     }
   }, {
     key: '_previousPicture',
-    value: function _previousPicture() {
-      console.log('prev');
-      //this._addPicture();
-      //this._addComment(4, 'radu 4', 'bbbb 2');
-      //this._deleteComment("4_1");
-
-      //this.setState({current_picture_id : this.state.current_picture_id-1});
+    value: function _previousPicture(event) {
+      event.preventDefault();
+      clearInterval(this.timer);
+      var index = (this.state.current_picture_id - 1) % 5;
+      this.setState({
+        current_picture_id: index === -1 ? 4 : index,
+        show_add_picture: false
+      });
+    }
+  }, {
+    key: '_nextPicture',
+    value: function _nextPicture(event) {
+      if (event) {
+        event.preventDefault();
+        clearInterval(this.timer);
+      }
+      this.setState({
+        current_picture_id: (this.state.current_picture_id + 1) % 5,
+        show_add_picture: false
+      });
+    }
+  }, {
+    key: '_toggleShowAddPicture',
+    value: function _toggleShowAddPicture() {
+      clearInterval(this.timer);
+      this.setState({
+        show_add_picture: !this.state.show_add_picture
+      });
+    }
+  }, {
+    key: '_addPicture',
+    value: function _addPicture(url, description) {
+      var new_picture = {
+        "id": this.state.all_pictures.length + 1,
+        "src": url,
+        "description": description,
+        "comments": []
+      };
+      var all_pictures = this.state.all_pictures.concat([new_picture]);
+      //console.log(pictures);
+      this.setState({
+        all_pictures: all_pictures,
+        pictures: this._fetchLastPictures(all_pictures),
+        show_add_picture: false,
+        current_picture_id: 4
+      });
+      this._savePictures(all_pictures);
     }
   }, {
     key: '_addComment',
     value: function _addComment(picture_id, author, body) {
-      var pictures = this.state.pictures;
-      var picture = pictures[picture_id - 1];
+      var all_pictures = this.state.all_pictures;
+      var picture = all_pictures[picture_id - 1];
       var new_comment = {
         "comment_id": picture_id + '_' + (picture.comments.length + 1),
         "author": author,
         "body": body
       };
       picture.comments = picture.comments.concat([new_comment]);
-      pictures[picture_id - 1] = picture;
-
-      this.setState({ pictures: pictures });
-      this._savePictures(pictures);
+      all_pictures[picture_id - 1] = picture;
+      this.setState({
+        all_pictures: all_pictures,
+        pictures: this._fetchLastPictures(all_pictures)
+      });
+      this._savePictures(all_pictures);
     }
   }, {
     key: '_deleteComment',
     value: function _deleteComment(comment_id) {
-
-      console.log('111' + comment_id);
-
       var _comment_id$split = comment_id.split('_');
 
       var _comment_id$split2 = _slicedToArray(_comment_id$split, 2);
@@ -36363,40 +36447,24 @@ var PictureBox = function (_React$Component) {
       var picture_ind = _comment_id$split2[0];
       var comment_ind = _comment_id$split2[1];
 
-      var pictures = this.state.pictures;
-      var picture = pictures[picture_ind - 1];
+      var all_pictures = this.state.all_pictures;
+      var picture = all_pictures[picture_ind - 1];
 
       picture.comments.splice(comment_ind - 1, 1);
-      pictures[picture_ind - 1] = picture;
-
-      this.setState({ pictures: pictures });
-      this._savePictures(pictures);
-    }
-  }, {
-    key: '_addPicture',
-    value: function _addPicture() {
-      console.log('add picture');
-      var new_picture = {
-        "id": this.state.pictures.length + 1,
-        "src": 'src' + (this.state.pictures.length + 1) + '.jpg',
-        "comments": []
-      };
-      var pictures = this.state.pictures.concat([new_picture]);
-      //console.log(pictures);
-      this.setState({ pictures: pictures });
-      this._savePictures(pictures);
-    }
-  }, {
-    key: '_nextPicture',
-    value: function _nextPicture() {
-      console.log('next');
-      //this._savePictures();
-      this.setState({ current_picture_id: this.state.current_picture_id + 1 });
+      picture.comments.map(function (comment, index) {
+        comment.comment_id = picture_ind + '_' + (index + 1);
+        return comment;
+      });
+      all_pictures[picture_ind - 1] = picture;
+      this.setState({
+        all_pictures: all_pictures,
+        pictures: this._fetchLastPictures(all_pictures)
+      });
+      this._savePictures(all_pictures);
     }
   }, {
     key: '_calljNorthPole',
     value: function _calljNorthPole(json, responseHandler) {
-
       jNorthPole.getStorage(json, responseHandler.bind(this));
       jNorthPole.getNewRealtimeSocket(responseHandler);
     }
@@ -36413,35 +36481,43 @@ var PictureBox = function (_React$Component) {
     }
   }, {
     key: '_savePictures',
-    value: function _savePictures(pictures) {
-      //console.log(this.state.pictures);
+    value: function _savePictures(all_pictures) {
       var json = {
         "api_key": "tkwdemo",
         "secret": "tkwdemo",
         "id": "578e12a9c9cfa03ef7000001",
-        "storage": pictures
+        "storage": all_pictures
       };
       this._calljNorthPoleByAjax(json, 'PUT', function (data) {
-        console.log(data);
+        //console.log(data);
       });
     }
   }, {
     key: '_fetchPicturess',
     value: function _fetchPicturess() {
-      var _this2 = this;
+      var _this3 = this;
 
       var json = {
         "api_key": "tkwdemo",
         "secret": "tkwdemo",
         "id": "578e12a9c9cfa03ef7000001"
       };
-
       this._calljNorthPoleByAjax(json, 'SEARCH', function (data) {
         if (data != null && data[0]) {
-          var pictures = data[0].storage;
-          _this2.setState({ pictures: pictures });
+          var all_pictures = data[0].storage;
+
+          _this3.setState({
+            all_pictures: all_pictures,
+            pictures: _this3._fetchLastPictures(all_pictures)
+          });
         }
       });
+    }
+  }, {
+    key: '_fetchLastPictures',
+    value: function _fetchLastPictures(all_pictures) {
+      var PICTURES_NO = 5;
+      return all_pictures.slice(all_pictures.length - PICTURES_NO, all_pictures.length);
     }
   }]);
 
@@ -36450,7 +36526,118 @@ var PictureBox = function (_React$Component) {
 
 exports.default = PictureBox;
 
-},{"./CommentBox":238,"jquery":2,"react":234}],242:[function(require,module,exports){
+},{"./CommentBox":238,"./PictureForm":242,"jquery":2,"react":234}],242:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PictureForm = function (_React$Component) {
+  _inherits(PictureForm, _React$Component);
+
+  function PictureForm() {
+    _classCallCheck(this, PictureForm);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PictureForm).call(this));
+
+    _this._handleSubmit = _this._handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(PictureForm, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        "div",
+        { className: "row_ picture-container" },
+        _react2.default.createElement(
+          "div",
+          { className: "cell" },
+          _react2.default.createElement(
+            "h2",
+            null,
+            "Add new picture"
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "picture-box" },
+            _react2.default.createElement(
+              "form",
+              { className: "picture-form", onSubmit: this._handleSubmit },
+              _react2.default.createElement(
+                "label",
+                null,
+                "New picture"
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "picture-form-fields" },
+                _react2.default.createElement("input", { placeholder: "URL:", ref: function ref(c) {
+                    return _this2._url = c;
+                  } }),
+                _react2.default.createElement("input", { placeholder: "Description:", ref: function ref(c) {
+                    return _this2._description = c;
+                  } })
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "picture-form-actions" },
+                _react2.default.createElement(
+                  "button",
+                  { type: "submit" },
+                  "Add picture"
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }, {
+    key: "_handleSubmit",
+    value: function _handleSubmit(event) {
+      event.preventDefault();
+
+      if (!/^((https?|ftp):)?\/\/.*\.(jpeg|jpg|png|gif|bmp)$/.test(this._url.value)) {
+        alert('Please provide a valid image url.');
+        return;
+      }
+
+      if (this._url.value === "" || this._description.value === "") {
+        alert('Please provide an url and a description.');
+        return;
+      }
+
+      this.props.addPicture(this._url.value, this._description.value);
+
+      this._url.value = '';
+      this._description.value = '';
+    }
+  }]);
+
+  return PictureForm;
+}(_react2.default.Component);
+
+exports.default = PictureForm;
+
+},{"react":234}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

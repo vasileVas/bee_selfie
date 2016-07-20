@@ -28,7 +28,8 @@ export default class Comment extends React.Component {
     return(
       <div className="comment">
 
-        <img src="assets/images/avatar-default.png" />
+        <div className="comment-avatar"></div>
+
 
         <p className="comment-header">{this.props.author}</p>
         <p className="comment-body">{commentBody}</p>
@@ -50,6 +51,6 @@ export default class Comment extends React.Component {
   }
 
   _handleDelete() {
-    this.props.onDelete(this.props.id);
+    this.props.onDelete(this.props.comment_id);
   }
 }

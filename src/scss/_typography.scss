@@ -5,6 +5,7 @@
 a, a:visited {
 	text-decoration:none;
 	color:$link_color;
+	cursor: pointer;
 	@include transition-all(.5s);
 }
 a:hover, a:active, a:focus {
@@ -22,7 +23,7 @@ h1,h2,h3,h4,h5,h6 {
 	line-height: 1em;
 	clear: both;
 	letter-spacing: -.5px;
-	text-align: center;
+	text-align: left;
 	font-weight: $font-weight-title;
 	font-weight: 700;
 }

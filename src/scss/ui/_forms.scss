@@ -90,22 +90,13 @@ input::-moz-focus-inner { /* Corrects inner padding and border displayed oddly i
 }
 
 
-.comment-form {
+.comment-form,
+.picture-form {
     background-color: #9ecbd2;
     border-radius: 10px;
     margin-bottom: 40px;
     padding: 20px;
     position: relative;
-
-    &::before {
-        background: rgba(0, 0, 0, 0) url("images/illo-gears.svg") no-repeat scroll center center;
-        content: "";
-        height: 80px;
-        position: absolute;
-        right: 0;
-        top: -80px;
-        width: 154px;
-    }
 
     label {
         color: #6ba2aa;

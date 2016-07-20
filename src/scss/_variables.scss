@@ -44,8 +44,8 @@ $blue_top: #3e7780;
 
 
 // COLORS: Links
-$link_color: $color1;
-$link_hover: darken( $color1, 20% );
+$link_color: darken( $color4, 20% );
+$link_hover: $color4;
 
 // COLORS: Buttons
 $button-color: #fce87c;

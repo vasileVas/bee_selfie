@@ -80,8 +80,9 @@ hr {
 
 .comment {
     margin-bottom: 40px;
-    & > img {
+    .comment-avatar {
         border: 2px solid #45686d;
+        background-image: url('../images/avatar_1.jpg');
         border-radius: 50%;
         float: left;
         height: 64px;
@@ -113,4 +114,18 @@ hr {
         }
     }
 
+}
+
+.actions {
+  position: relative;
+  text-align: center;
+  padding: 30px 0;
+
+  & > div {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .camera {
+    margin: 0 60px;
+  }
 }

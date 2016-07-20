@@ -30,21 +30,20 @@ export default class CommentForm extends React.Component {
   }
 
   _getCharacterCount() {
-
     this.setState({
       characters: this._body.value.length
     });
-
   }
 
   _handleSubmit(event) {
     event.preventDefault();
-
+    if ( this._author.value === ""  || this._body.value === "" ) {
+      alert('Please provide an author and a comment.');
+      return;
+    }
     this.props.addComment(this._author.value, this._body.value);
-
     this._author.value = '';
     this._body.value = '';
-
     this.setState({ characters: 0  });
   }
 }

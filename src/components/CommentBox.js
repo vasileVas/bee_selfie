@@ -24,26 +24,19 @@ export default class CommentBox extends React.Component {
 
   render() {
     const comments = this._getComments();
-
-    console.log(this.state.comments);
-
-    //this.setState({comments : this.props.comments});
-
-
     return(
       <div className="row_ comments-container">
         <div className="cell">
-          <h2>Join The Discussion</h2>
           <div className="comment-box">
-            <CommentForm addComment={this._addComment} />
             <h3 className="comment-count">{this._getCommentsTitle(comments.length)}</h3>
             <div className="comment-list">
               {comments}
             </div>
+            <h2>Join The Discussion</h2>
+            <CommentForm addComment={this._addComment} />
           </div>
         </div>
       </div>
-
     );
   }
 
@@ -58,9 +51,7 @@ export default class CommentBox extends React.Component {
   }
 
   _addComment(commentAuthor, commentBody) {
-
-    console.log(`${commentAuthor, commentBody}`);
-
+    this.props.onAddComment(this.props.picture_id, commentAuthor, commentBody);
   }
 
   _getComments() {
@@ -73,9 +64,8 @@ export default class CommentBox extends React.Component {
   }
 
   _deleteComment(comment_id) {
-    console.log('222'+comment_id);
-    const id = `${this.props.picture_id}_${comment_id}`;
-    this.props.onDeleteComment(id);
+    //const id = `${this.props.picture_id}_${comment_id}`;
+    this.props.onDeleteComment(comment_id);
   }
 
 }
