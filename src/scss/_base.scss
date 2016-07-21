@@ -16,14 +16,10 @@ body{
 	color: $body-text;
 	margin: 0;
 	padding: 0;
-	background: #333;
+	background: $white;
 	font-weight: $font-weight-body;
 	font-family: $font-family-primary;
 
-    // media query mixin, see _mixins.scss
-    @include desktop {
-        background: $grey-light;
-    }
 }
 
 hr {
@@ -40,12 +36,11 @@ hr {
 }
 
 .article {
-    padding-bottom: 40px;
-    padding-top: 40px;
+    padding-top: 20px;
 
     &.article-picture-description {
-        border-bottom: 2px solid #6ba2aa;
-        color: #6ba2aa;
+        border-bottom: 2px solid $color4;
+        color: $color4;
         font-size: 16px;
         margin: 0 0 30px;
         padding: 0 20px 20px;
@@ -56,6 +51,10 @@ hr {
         margin: auto;
         width: 500px;
 
+        @include small {
+            width: 100%;
+        }
+
         img {
           max-width: 100%
         }
@@ -63,7 +62,7 @@ hr {
 }
 
 .row_ {
-    background-color: #6ba2aa;
+    background-color: $color4;
     overflow: hidden;
     padding-bottom: 40px;
     padding-top: 40px;
@@ -77,6 +76,15 @@ hr {
     margin-bottom: 20px;
 }
 
+.comment-box {
+  padding: 5px;
+
+  @include small {
+      padding: 0 10px;
+  }
+
+}
+
 
 .comment {
     margin-bottom: 40px;
@@ -88,15 +96,17 @@ hr {
         height: 64px;
         margin: 0 10px 0 0;
         width: 64px;
+        text-transform: capitalize;
     }
     .comment-header {
-        border-bottom: 2px solid #fff;
-        color: #fff;
+        border-bottom: 2px solid $white;
+        color: $white;
         margin-bottom: 10px;
         padding-bottom: 5px;
+        text-transform: capitalize;
     }
     .comment-body {
-        color: #fff;
+        color: $white;
     }
     .comment-actions {
         color: #9ecbd2;
@@ -128,4 +138,20 @@ hr {
   .camera {
     margin: 0 60px;
   }
+}
+
+.article-title {
+  border-bottom: 3px solid #6ba2aa;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+.article-body {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.message_error {
+  color:red;
+  font-weight:bold;
 }

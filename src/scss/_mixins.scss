@@ -10,6 +10,13 @@
 }
 
 
+@mixin small {
+  @media (max-width: #{$small}) {
+    @content;
+  }
+}
+
+
 // Effects
 @mixin transition-all($time:.5s){
 	-webkit-transition: all $time ease-in-out;

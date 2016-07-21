@@ -197,15 +197,9 @@ body {
   color: #333333;
   margin: 0;
   padding: 0;
-  background: #333;
+  background: #fff;
   font-weight: 300;
-  font-family: "Roboto", sans-serif;
-}
-
-@media (min-width: 768px) {
-  body {
-    background: whitesmoke;
-  }
+  font-family: "Open Sans", Helevetica, Arial, sans-serif;
 }
 
 hr {
@@ -222,8 +216,7 @@ hr {
 }
 
 .article {
-  padding-bottom: 40px;
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .article.article-picture-description {
@@ -238,6 +231,12 @@ hr {
 .article.article-picture-image {
   margin: auto;
   width: 500px;
+}
+
+@media (max-width: 544px) {
+  .article.article-picture-image {
+    width: 100%;
+  }
 }
 
 .article.article-picture-image img {
@@ -260,6 +259,16 @@ hr {
   margin-bottom: 20px;
 }
 
+.comment-box {
+  padding: 5px;
+}
+
+@media (max-width: 544px) {
+  .comment-box {
+    padding: 0 10px;
+  }
+}
+
 .comment {
   margin-bottom: 40px;
 }
@@ -272,6 +281,7 @@ hr {
   height: 64px;
   margin: 0 10px 0 0;
   width: 64px;
+  text-transform: capitalize;
 }
 
 .comment .comment-header {
@@ -279,6 +289,7 @@ hr {
   color: #fff;
   margin-bottom: 10px;
   padding-bottom: 5px;
+  text-transform: capitalize;
 }
 
 .comment .comment-body {
@@ -314,6 +325,24 @@ hr {
 
 .actions .camera {
   margin: 0 60px;
+}
+
+.article-title {
+  border-bottom: 3px solid #6ba2aa;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.article-body {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.message_error {
+  color: red;
+  font-weight: bold;
 }
 
 .container {
@@ -375,7 +404,7 @@ a:hover, a:active, a:focus {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Roboto", sans-serif;
+  font-family: "Open Sans", Helevetica, Arial, sans-serif;
   text-transform: uppercase;
   line-height: 1em;
   clear: both;
@@ -402,7 +431,7 @@ h3 {
 
 p {
   margin-bottom: 1.5em;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6em;
 }
 
@@ -478,7 +507,7 @@ button {
   font-size: 14px;
   transition: background-color 0.3s ease-in-out;
   font-weight: 300;
-  font-family: "Roboto", sans-serif;
+  font-family: "Open Sans", Helevetica, Arial, sans-serif;
 }
 
 .button, button, button a, input[type="submit"], input[type="button"], input[type="reset"] {

@@ -9,7 +9,6 @@ import PictureBox from './components/PictureBox';
 //import Picture from './components/Picture';
 import About from './components/About';
 
-
 const app = (
   <Router history={hashHistory}>
     <Redirect from='/' to='/about' />

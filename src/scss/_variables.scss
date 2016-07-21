@@ -7,10 +7,12 @@
 
 //LAYOUT
 $desktop: 768px;
+$small: 544px;
+$large: 992px;
 
 // TYPOGRAPHY
-$font-family-title: 'Roboto', sans-serif;
-$font-family-primary: 'Roboto', sans-serif;  // "Helvetica Neue",Helvetica,Arial,sans-serif
+$font-family-title: "Open Sans",Helevetica,Arial,sans-serif;
+$font-family-primary: "Open Sans",Helevetica,Arial,sans-serif;  // "Helvetica Neue",Helvetica,Arial,sans-serif
 $body-text: #333333;
 $font_mono: 10px 'Monaco', monospace;
 $font-weight-title: 400;

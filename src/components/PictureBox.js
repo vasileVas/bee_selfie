@@ -84,7 +84,7 @@ export default class PictureBox extends React.Component {
   _previousPicture(event) {
     event.preventDefault();
     clearInterval(this.timer);
-    let index = (this.state.current_picture_id-1) % 5;
+    const index = (this.state.current_picture_id-1) % 5;
     this.setState({
         current_picture_id : index === -1 ? 4 : index,
         show_add_picture : false
@@ -185,7 +185,7 @@ export default class PictureBox extends React.Component {
      "storage" : all_pictures
     };
     this._calljNorthPoleByAjax(json, 'PUT', (data) => {
-      //console.log(data);
+      console.log(data);
     });
   }
 

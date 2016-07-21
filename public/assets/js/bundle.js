@@ -35736,7 +35736,7 @@ var app = _react2.default.createElement(
 });
 
 },{"./components/About":236,"./components/PictureBox":241,"./layout/Layout":243,"jquery":2,"react":234,"react-dom":3,"react-router":33}],236:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -35744,7 +35744,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -35766,12 +35766,45 @@ var About = function (_React$Component) {
   }
 
   _createClass(About, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'h4',
-        null,
-        'from about comp'
+        "div",
+        { className: "cell" },
+        _react2.default.createElement(
+          "h1",
+          { className: "article-title" },
+          "Test Application using React"
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "article-body" },
+          _react2.default.createElement(
+            "p",
+            null,
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis ante sit amet faucibus dapibus. Aliquam varius eros ut sapien lobortis sagittis. In aliquet felis vitae ligula rhoncus pharetra. In laoreet mollis mattis. In a viverra felis. Nam dolor nibh, sollicitudin sit amet tortor sit amet, efficitur dignissim velit. Aliquam quam dui, dignissim malesuada euismod eu, mattis sed lacus. Donec pellentesque lacinia interdum. Cras rhoncus a tellus sed congue."
+          ),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Nam quis faucibus neque. Donec orci tortor, tempor ut iaculis ut, accumsan sed nunc. Aliquam aliquet mollis arcu. Maecenas quis vulputate elit. Sed efficitur nec velit eu porta. Proin id condimentum ipsum. Sed a suscipit dui, vel dictum turpis. Sed hendrerit sem id velit auctor finibus. Praesent a velit nisi. Aliquam ac massa ac ante gravida interdum. In hac habitasse platea dictumst. Phasellus sit amet dapibus nunc, vel dapibus purus. Vestibulum at tincidunt erat. Ut pharetra fringilla elit, nec mollis est dictum vel. Nullam suscipit hendrerit metus ut ultrices. Nam commodo, est ac pharetra tristique, erat tellus efficitur purus, mollis elementum nisi velit in nibh."
+          ),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Fusce a ultricies libero. Curabitur suscipit, ligula eget euismod semper, lacus velit interdum purus, eget ultricies massa orci ultricies velit. Phasellus finibus neque nibh, ac varius nibh dapibus nec. Integer sodales viverra nulla quis dignissim. Nunc vestibulum elit at lectus laoreet eleifend. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed non maximus turpis. Nullam vitae volutpat diam."
+          ),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Suspendisse lacus nisi, placerat vel erat nec, egestas aliquet libero. Donec hendrerit est in elit interdum rutrum. Cras malesuada cursus nisi non bibendum. Praesent blandit enim mi, ultrices placerat diam laoreet nec. In a erat sit amet mauris ornare vehicula. Curabitur pretium sodales justo, eu posuere ante venenatis in. Pellentesque in ultricies diam, dapibus luctus sem. Aliquam erat volutpat. Sed a porta erat, ut mattis lacus."
+          ),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Vivamus tempus tempus bibendum. In ac ornare tortor, sit amet tempus lectus. Nullam pretium mauris porta, varius urna pretium, porta neque. Cras scelerisque augue a ligula faucibus consectetur. Suspendisse velit odio, tristique eget sagittis ac, scelerisque ac elit. Vestibulum vitae mauris rhoncus, consequat risus eget, gravida ligula. In fermentum consequat orci, non vestibulum lorem mattis at. Donec sed orci a nulla malesuada ultrices. "
+          )
+        )
       );
     }
   }]);
@@ -36147,11 +36180,17 @@ var CommentForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this));
 
     _this.state = {
-      characters: 0
+      characters: 0,
+      error: false
     };
 
     _this._handleSubmit = _this._handleSubmit.bind(_this);
     _this._getCharacterCount = _this._getCharacterCount.bind(_this);
+    _this._resetForm = _this._resetForm.bind(_this);
+
+    _this.messages = {
+      "missing_field": "Please provide an author and a comment."
+    };
     return _this;
   }
 
@@ -36159,6 +36198,12 @@ var CommentForm = function (_React$Component) {
     key: "render",
     value: function render() {
       var _this2 = this;
+
+      var message = this.state.error ? _react2.default.createElement(
+        "p",
+        { className: "message_error" },
+        this.messages[this.state.error]
+      ) : "";
 
       return _react2.default.createElement(
         "form",
@@ -36173,7 +36218,7 @@ var CommentForm = function (_React$Component) {
           { className: "comment-form-fields" },
           _react2.default.createElement("input", { placeholder: "Name:", ref: function ref(c) {
               return _this2._author = c;
-            } }),
+            }, onChange: this._resetForm }),
           _react2.default.createElement("textarea", { placeholder: "Comment:", ref: function ref(c) {
               return _this2._body = c;
             }, onChange: this._getCharacterCount })
@@ -36184,6 +36229,7 @@ var CommentForm = function (_React$Component) {
           this.state.characters,
           " characters"
         ),
+        message,
         _react2.default.createElement(
           "div",
           { className: "comment-form-actions" },
@@ -36196,8 +36242,14 @@ var CommentForm = function (_React$Component) {
       );
     }
   }, {
+    key: "_resetForm",
+    value: function _resetForm() {
+      this.setState({ error: false });
+    }
+  }, {
     key: "_getCharacterCount",
     value: function _getCharacterCount() {
+      this._resetForm();
       this.setState({
         characters: this._body.value.length
       });
@@ -36207,7 +36259,7 @@ var CommentForm = function (_React$Component) {
     value: function _handleSubmit(event) {
       event.preventDefault();
       if (this._author.value === "" || this._body.value === "") {
-        alert('Please provide an author and a comment.');
+        this.setState({ error: 'missing_field' });
         return;
       }
       this.props.addComment(this._author.value, this._body.value);
@@ -36489,7 +36541,7 @@ var PictureBox = function (_React$Component) {
         "storage": all_pictures
       };
       this._calljNorthPoleByAjax(json, 'PUT', function (data) {
-        //console.log(data);
+        console.log(data);
       });
     }
   }, {
@@ -36555,7 +36607,17 @@ var PictureForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PictureForm).call(this));
 
+    _this.state = {
+      error: false
+    };
+
     _this._handleSubmit = _this._handleSubmit.bind(_this);
+    _this._resetForm = _this._resetForm.bind(_this);
+
+    _this.messages = {
+      "valid_url": "Please provide a valid image url.",
+      "missing_field": "Please provide an url and a description."
+    };
     return _this;
   }
 
@@ -36563,6 +36625,12 @@ var PictureForm = function (_React$Component) {
     key: "render",
     value: function render() {
       var _this2 = this;
+
+      var message = this.state.error ? _react2.default.createElement(
+        "p",
+        { className: "message_error" },
+        this.messages[this.state.error]
+      ) : "";
 
       return _react2.default.createElement(
         "div",
@@ -36591,11 +36659,12 @@ var PictureForm = function (_React$Component) {
                 { className: "picture-form-fields" },
                 _react2.default.createElement("input", { placeholder: "URL:", ref: function ref(c) {
                     return _this2._url = c;
-                  } }),
+                  }, onChange: this._resetForm }),
                 _react2.default.createElement("input", { placeholder: "Description:", ref: function ref(c) {
                     return _this2._description = c;
-                  } })
+                  }, onChange: this._resetForm })
               ),
+              message,
               _react2.default.createElement(
                 "div",
                 { className: "picture-form-actions" },
@@ -36611,17 +36680,22 @@ var PictureForm = function (_React$Component) {
       );
     }
   }, {
+    key: "_resetForm",
+    value: function _resetForm() {
+      this.setState({ error: false });
+    }
+  }, {
     key: "_handleSubmit",
     value: function _handleSubmit(event) {
       event.preventDefault();
 
-      if (!/^((https?|ftp):)?\/\/.*\.(jpeg|jpg|png|gif|bmp)$/.test(this._url.value)) {
-        alert('Please provide a valid image url.');
+      if (this._url.value === "" || this._description.value === "") {
+        this.setState({ error: 'missing_field' });
         return;
       }
 
-      if (this._url.value === "" || this._description.value === "") {
-        alert('Please provide an url and a description.');
+      if (!/^((https?|ftp):)?\/\/.*\.(jpeg|jpg|png|gif|bmp)$/.test(this._url.value)) {
+        this.setState({ error: 'valid_url' });
         return;
       }
 
