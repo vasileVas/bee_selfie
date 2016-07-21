@@ -10,6 +10,7 @@ Starter code for testing React using ES2015, Babel, Gulp, Sass
 
 # Using
 
-Run `gulp` from the command line and you are good to go!
+Run `gulp` from the command line and the js and scss files
+will be transpiled to the `public` directory.
 
-The resulting code ends up in the `public` directory.
+Open index.html file form public directory.
